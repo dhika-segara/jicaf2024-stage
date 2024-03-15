@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap Homepage</title>
+    <!-- Link to Bootstrap CSS and JavaScript -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <style>
+        :root{
+            --primary-color: #294a8e;
+            --bg-color: #dbdbdb;
+            --yellow-color: #D9F65C;
+        }
+        @font-face{
+            font-family: 'ClashDisplay';
+            src: url('res/font/ClashDisplay-Medium.woff') format('woff');
+            font-weight: normal;
+        }
+        @font-face{
+            font-family: 'ClashDisplay';
+            src: url('res/font/ClashDisplay-Semibold.woff') format('woff');
+            font-weight: 500;
+        }
+        @font-face{
+            font-family: 'ClashDisplay';
+            src: url('res/font/ClashDisplay-Bold.woff') format('woff');
+            font-weight: bold;
+        }
+        body{
+            /*background-image: url('res/img/bg-left.png'), url('res/img/bg-right.png');
+            background-size: auto 100%, auto 100%;
+            background-repeat: no-repeat;
+            background-position: -115px center, center right;*/
+            background-color: var(--bg-color);
+
+            font-family: 'ClashDisplay', sans-serif;
+            font-weight: normal;
+            color: var(--primary-color);
+        }
+        .parallax-container{
+            position: fixed;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            z-index: -99;
+        }
+        .parallax-background{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 275%;
+            background-image: url('res/img/bg-left.png'), url('res/img/bg-right.png');
+            background-size: auto 100%, auto 100%;
+            background-position: center left, center right;
+            background-repeat: repeat-y;
+            transform: translate(0,0);
+            transition: transform 5ms ease-in-out;
+        }
+        .navbar-fixed-top{
+            position: fixed;
+            left: 0;
+            right: 0;
+            background-color: var(--bg-color);
+            z-index: 99;
+            -webkit-transition: background-color 300ms ease-out;
+            -moz-transition: background-color 300ms ease-out;
+            -o-transition: background-color 300ms ease-out;
+            transition: background-color 300ms ease-out;
+        }
+        .navbar-fixed-top.not-scrolled{
+            background-color: rgba(0,0,0,0);
+        }
+        .nav-container{
+            margin: 20px 0;
+            padding: 0;
+            list-style: none;
+            text-align: center;
+        }
+        .nav-item{
+            display: inline-block;
+            margin: 0 25px;
+        }
+        .one-section{
+            min-height: 100vh;
+            display:flex;
+            align-items:center;
+        }
+        #home{
+            padding-top: 65px;
+        }
+        .main-img{
+            text-align: center;
+            margin: 50px 0;
+        }
+        .main-img img{
+            max-width: 100%;
+        }
+        .home-info img{
+            height: 100%;
+            max-height: 48px;
+        }
+        .info-item{
+            font-size: 16px;
+        }
+        /*.partners-container{
+            max-width: 90vw;
+        }
+        .partners{
+            font-size: 12px;
+            line-height: 13px;
+        }
+        .partners-item img{
+            height: 40px;
+        }*/
+        .artist-title, .event-title, .ticket-title{
+            font-size: 32px;
+            font-weight: bold;
+        }
+        #tickets{
+            padding-top: 65px;
+        }
+        .ticket-title{
+            margin-bottom: 50px;
+        }
+        .ticket-container{
+            position: relative;
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            color: var(--primary-color);
+        }
+        .ticket-container::before{
+            content: '';
+            display: block;
+            width: 100%;
+            height: 150%;
+            background-color: var(--yellow-color);
+            border-radius: 100%;
+            position: absolute;
+            top: -20%;
+            rotate: -5deg;
+            z-index: -1;
+        }
+        #regular{
+            margin: 10px 0;
+        }
+        .ticket-name{
+            font-size: 40px;
+            font-weight: bold;
+        }
+        .ticket-description{
+            font-size: 23px;
+            line-height: 24px;
+        }
+        #artist{
+            text-align: center;
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+        .artist-title{
+            margin: 45px 0 15px 0;
+        }
+        .artist-names{
+            font-size: 34px;
+            line-height: 40px;
+        }
+        .official-artist-names{
+            font-size: 18px;
+            line-height: 18px;
+        }
+        #event{
+
+        }
+        .event-title{
+            margin-bottom: 15px;
+        }
+        .schedule-title{
+            margin-bottom: 15px;
+            font-size: 18px;
+            line-height: 18px;
+            font-weight: 500;
+        }
+        .schedule-items, .workshop{
+            font-size: 12px;
+            line-height: 13px;
+        }
+        .workshop{
+            margin-bottom: 30px;
+        }
+        .schedule-items{
+            min-height: 140px;
+        }
+        .schedule-item{
+            margin-bottom: 10px;
+        }
+        #partners{
+
+        }
+        .partner-title{
+            margin-bottom: 25px;
+        }
+        #organizer{
+            padding-top: 24px;
+        }
+        .partner-item{
+            margin-bottom: 20px;
+        }
+        .partner-item img{
+            max-width: 100%;
+        }
+        #pineapple{
+            transform: translateY(-23px);
+        }
+        #footer{
+            margin: 30px 0 50px;
+            text-align: center;
+        }
+        .socmed-container{
+            margin-bottom: 15px;
+        }
+        .socmed-item{
+            display: inline-block;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+        .socmed-item img{
+            height: 30px;
+        }
+        /* Mobile */
+        @media (max-width: 767px) {
+            .nav-item{
+                margin: 0 15px;
+            }
+            .main-img{
+                margin: 30px 0;
+            }
+            /*.partners-container{
+                text-align: center;
+            }
+            .partners-title{
+                font-size: 14px;
+                margin-top: 25px;
+            }
+            .partners-item img{
+                height: 45px;
+            }*/
+            .artist-title, .event-title{
+                font-size: 28px;
+            }
+            .artist-title{
+                margin: 35px 0 10px 0;
+            }
+            .artist-names{
+                font-size: 26px;
+                line-height: 30px;
+            }
+            .official-artist-names{
+                font-size: 15px;
+            }
+            #schedule{
+                padding: 0 30px;
+            }
+            .workshop{
+                margin-bottom: 40px;
+            }
+        }
+        /* Tablet */
+        @media (min-width: 768px) and (max-width: 991px) {
+            .one-section{
+                min-height: auto;
+            }
+            /*.partners-title{
+                margin-top: 15px;
+            }*/
+        }
+    </style>
+</head>
+<body>
+    <div class="parallax-container">
+        <div class="parallax-background"></div>
+    </div>
+    <!-- NAVIGATION -->
+    <nav class="navbar-fixed-top not-scrolled">
+        <div class="container">
+            <ul class="nav-container">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#home">Home</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#tickets">Ticket</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#artist">Artist</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#schedule">Schedule</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HOME -->
+    <div id="home">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 main-img">
+                    <img src="res/img/logo.png" />
+                </div>
+            </div>
+            <div class="home-info row justify-content-evenly align-items-center">
+                <div class="col-2 info-item">
+                    JAKARTA ILLUSTRATION<br/>& CREATIVE ARTS FAIR
+                </div>
+                <div class="col-2 info-item">
+                    9-19<br/>NOVEMBER 2023
+                </div>
+                <div class="col-2 info-item">
+                    SPAC8, UG<br/>ASHTA District 8
+                </div>
+                <div class="col-2 info-item text-center">
+                    <img src="res/img/sponsor/ashta.png" />
+                </div>
+            </div>
+        </div>
+        <!--<div class="partners-container container-fluid">
+            <div class="row partners">
+                <div class="col-12 col-md-4 col-lg-2 order-md-1 order-lg-1">
+                    <div class="partners-title">
+                        <div class="d-none d-lg-block">
+                            OFFICIAL<br/><b>PRINTING PARTNER</b>
+                        </div>
+                        <div class="d-block d-lg-none">
+                            OFFICIAL<b>PRINTING PARTNER</b>
+                        </div>
+                    </div>
+                    <div class="partners-item">
+                        <img src="res/img/jicafjadiprint.png" />
+                    </div>
+                </div>
+                <div class="col-12 col-md-12 col-lg order-lg-2">
+                    <div class="partners-title">
+                        <div class="d-none d-lg-block">
+                            OFFICIAL<br/><b>PARTNER</b>
+                        </div>
+                        <div class="d-block d-lg-none">
+                            OFFICIAL<b>PARTNER</b>
+                        </div>
+                    </div>
+                    <div class="container-fluid">
+                        <div class="row g-0 row-cols-2 row-cols-md-auto">
+                            <div class="col partners-item">
+                                <img src="res/img/jicafblackhandgang.png" />
+                            </div>
+                            <div class="col partners-item">
+                                <img src="res/img/jicafbritishcouncil.png" />
+                            </div>
+                            <div class="col partners-item">
+                                <img src="res/img/jicafformat.png" />
+                            </div>
+                            <div class="col partners-item">
+                                <img src="res/img/jicafklif.png" />
+                            </div>
+                            <div class="col partners-item">
+                                <img src="res/img/jicafoic.png" />
+                            </div>
+                            <div class="col partners-item">
+                                <img src="res/img/jicafklif.png" />
+                            </div>
+                            <div class="col partners-item">
+                                <img src="res/img/jicafklif.png" />
+                            </div>
+                            <div class="col partners-item">
+                                <img src="res/img/jicafbritishcouncil.png" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md col-lg-3 order-md-3 order-lg-3">
+                    <div class="partners-title">
+                        <div class="d-none d-lg-block">
+                            OFFICIAL<br/><b>MEDIA PARTNER</b>
+                        </div>
+                        <div class="d-block d-lg-none">
+                            OFFICIAL<b>MEDIA PARTNER</b>
+                        </div>
+                    </div>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col partners-item">
+                                <img src="res/img/jicafblackhandgang.png" />
+                            </div>
+                            <div class="col partners-item">
+                                <img src="res/img/jicafbritishcouncil.png" />
+                            </div>
+                            <div class="col partners-item">
+                                <img src="res/img/jicafformat.png" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+    </div>
+
+    <!-- TICKETS -->
+    <div id="tickets" class="container">
+        <div class="row justify-content-evenly">
+            <div class="col-12 ticket-title text-center">GET YOUR TICKETS NOW!</div>
+            <div class="col-4">
+                <a href="https://www.loket.com/event/jakarta-illustration-creative-arts-fair-2023_VDDb4" target="_blank" id="regular" class="ticket-container">
+                    <div class="ticket-name">REGULAR PASS</div>
+                    <div class="ticket-description">for one day access</div>
+                </a>
+            </div>
+            <div class="col-4">
+                <a href="https://www.loket.com/event/jakarta-illustration-creative-arts-fair-2023_VDDb4" target="_blank" class="ticket-container">
+                    <div class="ticket-name">FULL EVENT PASS</div>
+                    <div class="ticket-description">for full 10-days unlimited entry<br/>+ 10% discount on all purchases</div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ARTISTS -->
+    <div id="artist" class="container one-section">
+        <div class="row">
+            <div class="col-12 artist-title mt-0">GUEST ARTISTS</div>
+            <div class="col-12 artist-names">
+                Ardhira Putra — Antonio Reinhard — Ardneks — Elicia Edijanto — Isha Hening — izzy — Liunic — M. Fatchurofi — Pinot — Stereoflow
+            </div>
+
+            <div class="col-12 artist-title">SPECIAL SHOWCASE</div>
+            <div class="col-12 artist-names">
+                Kowawa by Abenk Alter — Kunto Aji — Machine56 — Tabi by Marchella FP — Mochtar Sarman
+            </div>
+
+            <div class="col-12 artist-title">OFFICIAL ARTISTS</div>
+            <div class="col-6 col-md-3 official-artist-names">
+                agil8<br/>
+                Arya Mularama<br/>
+                aufaag<br/>
+                DAN<br/>
+                Durhminic<br/>
+                Erikartoon<br/>
+                Glendford Lumbao<br/>
+                Hushbeast<br/>
+                Jeanifer Youngky<br/>
+                Jeremy Gdalia<br/>
+                Jeremy Jap
+            </div>
+            <div class="col-6 col-md-3 official-artist-names">
+                Jill Tran<br/>
+                Kei Kusuma<br/>
+                Kevin Varian<br/>
+                Kong Andri<br/>
+                Matasatu & Matabolong<br/>
+                mikrosil<br/>
+                Mirfak<br/>
+                Monez<br/>
+                Nasaya Mafaridik<br/>
+                Nikojutsu<br/>
+                Nurulaila Fitriyani
+            </div>
+            <div class="col-6 col-md-3 official-artist-names">
+                OLI<br/>
+                Owi Liunic<br/>
+                Phantasien<br/>
+                Powl<br/>
+                Rensi Ardinta<br/>
+                Royes<br/>
+                rubahitam<br/>
+                Rukmunal Hakim<br/>
+                Sari Sartje<br/>
+                SATRIAWGP<br/>
+                Satwika Kresna
+            </div>
+            <div class="col-6 col-md-3 official-artist-names">
+                SDNT<br/>
+                Shane Tiara<br/>
+                Shanlyn C.<br/>
+                taufikrgb<br/>
+                TKS Lowskill<br/>
+                Tommy Chandra<br/>
+                Villarica<br/>
+                Wicaksono Azis<br/>
+                Wulang Sunu<br/>
+                Yogkus<br/>
+                Yudho
+            </div>
+        </div>
+    </div>
+
+    <!-- SCHEDULE -->
+    <div id="schedule" class="container one-section">
+        <div class="row row-cols-2 row-cols-md-5">
+            <div class="col-12 col-md-12">
+                <div class="event-title">EVENT SCHEDULE</div>
+            </div>
+            <div class="col">
+                <div class="schedule-title">[ FRI ]<br/>10 NOV</div>
+                <div class="schedule-items">
+                    <div class="schedule-item">
+                        CONFERENCE<br/>
+                        16:00-17:00<br/>
+                        JICAF x KLIF x OIC
+                    </div>
+                    <div class="schedule-item">
+                        16:00-17:00<br/>
+                        Stereoflow
+                    </div>
+                    <div class="schedule-item">
+                        17:00-18:00<br/>
+                        M. Fatchurof
+                    </div>
+                </div>
+                <div class="workshop">
+                    WORKSHOP<br/>
+                    PRIME BLANK CANVAS
+                </div>
+            </div>
+            <div class="col">
+                <div class="schedule-title">[ SAT ]<br/>11 NOV</div>
+                <div class="schedule-items">
+                    <div class="schedule-item">
+                        CONFERENCE<br/>
+                        16:00-17:00<br/>
+                        Liunic
+                    </div>
+                </div>
+                <div class="workshop">
+                    WORKSHOP<br/>
+                    PRIME BLANK CANVAS
+                </div>
+            </div>
+            <div class="col">
+                <div class="schedule-title">[ SUN ]<br/>12 NOV</div>
+                <div class="schedule-items">
+                    <div class="schedule-item">
+                        CONFERENCE<br/>
+                        15:00-16:00<br/>
+                        British Council Artists
+                    </div>
+                    <div class="schedule-item">
+                        16:00-17:00<br/>
+                        Izzy x Isha Hening
+                    </div>
+                </div>
+                <div class="workshop">
+                    WORKSHOP<br/>
+                    PRIME BLANK CANVAS<br/>
+                    CIPSI CRAFF
+                </div>
+            </div>
+            <div class="col">
+                <div class="schedule-title">[ MON ]<br/>13 NOV</div>
+                <div class="schedule-items">
+                    <div class="schedule-item">
+                        CONFERENCE<br/>
+                        TBC
+                    </div>
+                </div>
+                <div class="workshop">
+                    WORKSHOP<br/>
+                    TBC
+                </div>
+            </div>
+            <div class="col">
+                <div class="schedule-title">[ TUE ]<br/>14 NOV</div>
+                <div class="schedule-items">
+                    <div class="schedule-item">
+                        CONFERENCE<br/>
+                        15:00-16:00<br/>
+                        Jadi Print x JICAF
+                    </div>
+                </div>
+                <div class="workshop">
+                    WORKSHOP<br/>
+                    TBC
+                </div>
+            </div>
+            <div class="col">
+                <div class="schedule-title">[ WED ]<br/>15 NOV</div>
+                <div class="schedule-items">
+                    <div class="schedule-item">
+                        CONFERENCE<br/>
+                        TBC
+                    </div>
+                </div>
+                <div class="workshop">
+                    WORKSHOP<br/>
+                    TBC
+                </div>
+            </div>
+            <div class="col">
+                <div class="schedule-title">[ THU ]<br/>16 NOV</div>
+                <div class="schedule-items">
+                    <div class="schedule-item">
+                        CONFERENCE<br/>
+                        15:00-16:00<br/>
+                        Pinterest x JICAF Artists
+                    </div>
+                    <div class="schedule-item">
+                        18:30-19:30<br/>
+                        Antonio Reinhard x Kunto Aji
+                    </div>
+                </div>
+                <div class="workshop">
+                    WORKSHOP<br/>
+                    BLACK HAND GANG
+                </div>
+            </div>
+            <div class="col">
+                <div class="schedule-title">[ FRI ]<br/>17 NOV</div>
+                <div class="schedule-items">
+                    <div class="schedule-item">
+                        CONFERENCE<br/>
+                        15:00-16:00<br/>
+                        Elicia Edijanto
+                    </div>
+                    <div class="schedule-item">
+                        17:00-18:00<br/>
+                        Stereoflow
+                    </div>
+                </div>
+                <div class="workshop">
+                    WORKSHOP<br/>
+                    PRIME BLANK CANVAS<br/>
+                    BLACK HAND GANG
+                </div>
+            </div>
+            <div class="col">
+                <div class="schedule-title">[ SAT ]<br/>18 NOV</div>
+                <div class="schedule-items">
+                    <div class="schedule-item">
+                        CONFERENCE<br/>
+                        15:00-16:00<br/>
+                        GMK x JICAF Artists
+                    </div>
+                    <div class="schedule-item">
+                        17:00-18:00<br/>
+                        Ardhira Putra
+                    </div>
+                </div>
+                <div class="workshop">
+                    WORKSHOP<br/>
+                    PRIME BLANK CANVAS
+                </div>
+            </div>
+            <div class="col">
+                <div class="schedule-title">[ SUN ]<br/>19 NOV</div>
+                <div class="schedule-items">
+                    <div class="schedule-item">
+                        CONFERENCE<br/>
+                        15:00-16:00<br/>
+                        BHG
+                    </div>
+                    <div class="schedule-item">
+                        17:00-18:00<br/>
+                        JICAF Committees
+                    </div>
+                </div>
+                <div class="workshop">
+                    WORKSHOP<br/>
+                    PRIME BLANK CANVAS
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PARTNERS -->
+    <div id="partners">
+        <div class="container">
+            <div class="row justify-content-evenly">
+                <div class="col-auto">
+                    <div id="organizer" class="partner-title">
+                        <b>ORGANIZER</b>
+                    </div>
+                    <div class="partner-item">
+                        <img height="40" src="res/img/sponsor/danumaya.png" />
+                    </div>
+                    <div class="partner-item">
+                        <img height="37" src="res/img/sponsor/gaspack.png" />
+                    </div>
+                    <div class="partner-item">
+                        <img height="17" src="res/img/sponsor/int3rsect.png" />
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="partner-title">
+                        OFFICIAL<br/><b>PRINTING PARTNER</b>
+                    </div>
+                    <div class="partner-item">
+                        <img height="20" src="res/img/sponsor/jadi-print.png" />
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="partner-title">
+                        OFFICIAL<br/><b>PARTNER</b>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-auto">
+                                    <div class="partner-item">
+                                        <img height="25" src="res/img/sponsor/black-hand-gang.png" />
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="partner-item">
+                                        <img height="32" src="res/img/sponsor/british-council.png" />
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="partner-item">
+                                        <img height="28" src="res/img/sponsor/cipsi-craff.png" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-auto">
+                                    <div class="partner-item">
+                                        <img height="18" src="res/img/sponsor/format.png" />
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="partner-item">
+                                        <img height="45" src="res/img/sponsor/klif.png" />
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="partner-item">
+                                        <img height="40" src="res/img/sponsor/oic.png" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-auto">
+                                    <div class="partner-item">
+                                        <img id="pineapple" height="100" src="res/img/sponsor/pineapple.png" />
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="partner-item">
+                                        <img height="50" src="res/img/sponsor/pinterest.png" />
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="partner-item">
+                                        <img height="45" src="res/img/sponsor/prime-black-canvas.png" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="partner-title">
+                        OFFICIAL<br/><b>MEDIA PARTNER</b>
+                    </div>
+                    <div class="partner-item">
+                        <img height="32" src="res/img/sponsor/gmk.png" />
+                    </div>
+                    <div class="partner-item">
+                        <img height="40" src="res/img/sponsor/infipop.png" />
+                    </div>
+                    <div class="partner-item">
+                        <img height="40" src="res/img/sponsor/fantoystic.png" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div id="footer">
+        <div class="continer">
+            <div class="socmed-container">
+                <a class="socmed-item" href="https://www.instagram.com/jkt.icaf/" target="_blank">
+                    <img src="res/img/socmed-ig.png" />
+                </a>
+                <a class="socmed-item" href="https://id.pinterest.com/JICAF2023/" target="_blank">
+                    <img src="res/img/socmed-pinterest.png" />
+                </a>
+            </div>
+            <div class="copyright">
+                &copy; JICAF 2023. ALL RIGHTS RESERVED.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Select all links with #ID anchors
+            $('.nav-link').on('click', function(event) {
+                event.preventDefault();
+
+                // Get the target #ID from the href attribute
+                var target = $(this.hash);
+
+                // Animate scrolling to the target #ID
+                $('html, body').animate({
+                    scrollTop: target.offset().top - 60
+                }, 100); // Adjust the duration as needed
+            });
+
+            $(window).scroll(function() {
+                // Check if the page has been scrolled down
+                var scrollPosition = $(this).scrollTop();
+                $('.parallax-background').css('transform', 'translate(0, ' + -scrollPosition / 2 + 'px)');
+                if ($(this).scrollTop() > 0) {
+                    // The page is not at the top
+                    $('.navbar-fixed-top').removeClass("not-scrolled");
+                } else {
+                    // The page is at the top
+                    $('.navbar-fixed-top').addClass("not-scrolled");
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

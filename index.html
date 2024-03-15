@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JICAF 2023</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+    <link rel="manifest" href="./site.webmanifest">
+    <link rel="mask-icon" href="./safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="theme-color" content="#ffffff">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <style>
+        :root{
+            --primary-color: #294a8e;
+            --bg-color: #dbdbdb;
+            --yellow-color: #D9F65C;
+        }
+        @font-face{
+            font-family: 'ClashDisplay';
+            src: url('res/font/ClashDisplay-Medium.woff') format('woff');
+            font-weight: normal;
+        }
+        @font-face{
+            font-family: 'ClashDisplay';
+            src: url('res/font/ClashDisplay-Semibold.woff') format('woff');
+            font-weight: 500;
+        }
+        @font-face{
+            font-family: 'ClashDisplay';
+            src: url('res/font/ClashDisplay-Bold.woff') format('woff');
+            font-weight: bold;
+        }
+        body{
+            background-color: var(--bg-color);
+
+            font-family: 'ClashDisplay', sans-serif;
+            font-weight: normal;
+            color: var(--primary-color);
+
+            overflow-x: hidden;
+        }
+        .parallax-container{
+            position: fixed;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            z-index: -99;
+        }
+        .parallax-background{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 275%;
+            background-image: url('res/img/bg-left.png'), url('res/img/bg-right.png');
+            background-size: auto 100%, auto 100%;
+            background-position: center left, center right;
+            background-repeat: repeat-y;
+            -webkit-transform: translate(0,0);
+            -moz-transform: translate(0,0);
+            -ms-transform: translate(0,0);
+            -o-transform: translate(0,0);
+            transform: translate(0,0);
+            transition: transform 5ms ease-in-out;
+        }
+        .navbar-fixed-top{
+            position: fixed;
+            left: 0;
+            right: 0;
+            background-color: var(--bg-color);
+            z-index: 99;
+            -webkit-transition: background-color 300ms ease-out;
+            -moz-transition: background-color 300ms ease-out;
+            -o-transition: background-color 300ms ease-out;
+            transition: background-color 300ms ease-out;
+        }
+        .navbar-fixed-top.not-scrolled{
+            background-color: rgba(0,0,0,0);
+        }
+        .nav-container{
+            margin: 20px 0;
+            padding: 0;
+            list-style: none;
+            text-align: center;
+        }
+        .nav-item{
+            display: inline-block;
+            margin: 0 25px;
+        }
+        .one-section{
+            margin-top: 100px;
+            margin-bottom: 100px;
+        }
+        #home{
+            padding-top: 65px;
+        }
+        .main-img{
+            text-align: center;
+            margin: 50px 0;
+        }
+        .main-img img{
+            max-width: 100%;
+        }
+        .home-info img{
+            height: 100%;
+            max-height: 48px;
+        }
+        .info-item{
+            font-size: 16px;
+        }
+        #lashta{
+            text-align: center;
+        }
+        .artist-title, .event-title, .ticket-title{
+            font-size: 32px;
+            font-weight: bold;
+        }
+        #tickets{
+            
+        }
+        .ticket-title{
+            margin-bottom: 100px;
+            position: relative;
+        }
+        .ticket-marquee{
+            width: 100vw;
+            height: 50px;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            overflow-x: hidden;
+        }
+        .marquee-container{
+            display: block;
+            width: 7104px;
+            position: absolute;
+            animation: runningText 20s linear infinite;
+        }
+        .marquee-item{
+            width: 50%;
+            float: left;
+        }
+        @keyframes runningText{
+            0% {
+                left: 0;
+            }
+            100% {
+                left: -3552px;
+            }
+        }
+        @keyframes runningTextMobile{
+            0% {
+                left: 0;
+            }
+            100% {
+                left: -3107px;
+            }
+        }
+        .ticket-container{
+            position: relative;
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            color: var(--primary-color);
+            z-index: 2;
+        }
+        .ticket-container::before{
+            content: '';
+            display: block;
+            width: 100%;
+            height: 150%;
+            background-color: var(--yellow-color);
+            border-radius: 100%;
+            position: absolute;
+            top: -20%;
+            rotate: -5deg;
+            z-index: 1;
+        }
+        .ticket-container .ticket-name, .ticket-container .ticket-description{
+            position: relative;
+            z-index: 2;
+            -webkit-transform: translateY(0);
+            -moz-transform: translateY(0);
+            -ms-transform: translateY(0);
+            -o-transform: translateY(0);
+            transform: translateY(0);
+            transition: transform 200ms 0ms ease-in-out;
+        }
+        .ticket-container:hover .ticket-name, .ticket-container:hover .ticket-description{
+            -webkit-transform: translateY(-10px);
+            -moz-transform: translateY(-10px);
+            -ms-transform: translateY(-10px);
+            -o-transform: translateY(-10px);
+            transform: translateY(-10px);
+        }
+        #regular{
+            margin: 10px 0;
+        }
+        .ticket-name{
+            font-size: 40px;
+            font-weight: bold;
+        }
+        .ticket-description{
+            font-size: 23px;
+            line-height: 24px;
+        }
+        #artist{
+            text-align: center;
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+        .artist-title{
+            margin: 45px 0 15px 0;
+        }
+        .artist-names{
+            font-size: 34px;
+            line-height: 40px;
+        }
+        .artist-names a, .official-artist-names a{
+            text-decoration: none;
+            color: var(--primary-color);
+        }
+        .artist-names a{
+            position: relative;
+            display: inline-block;
+        }
+        .artist-names a span{
+            position: relative;
+            padding: 0 10px;
+        }
+        .artist-img{
+            position: absolute;
+            pointer-events: none;
+            z-index: 5;
+            top: 100%;
+            left: 0;
+            height: 350px;
+            -webkit-transform: translate(0%, -100%);
+            -moz-transform: translate(0%, -100%);
+            -ms-transform: translate(0%, -100%);
+            -o-transform: translate(0%, -100%);
+            transform: translate(0%, -100%);
+            opacity: 0;
+        }
+        .artist-names a:hover{
+            background-color: var(--primary-color);
+            color: var(--yellow-color);
+        }
+        .artist-names a:hover span{
+            z-index: 10;
+            background-color: var(--primary-color);
+            color: var(--yellow-color);
+        }
+        .artist-names a:hover .artist-img{
+            opacity: 1;
+        }
+        .official-artist-names{
+            font-size: 18px;
+            line-height: 18px;
+        }
+        .official-artist-names a{
+            display: inline-block;
+        }
+        .official-artist-names a span{
+            padding: 0 10px;
+        }
+        .official-artist-names a:hover span{
+            background-color: var(--primary-color);
+            color: var(--yellow-color);
+        }
+        #event{
+
+        }
+        .event-title{
+            margin-bottom: 15px;
+        }
+        .schedule-title{
+            margin-bottom: 15px;
+            font-size: 18px;
+            line-height: 18px;
+            font-weight: 500;
+        }
+        .schedule-items, .workshop{
+            font-size: 12px;
+            line-height: 13px;
+        }
+        .schedule-items b, .workshop b{
+            font-weight: 500;
+        }
+        .workshop{
+            margin-bottom: 30px;
+        }
+        .schedule-items{
+            min-height: 140px;
+        }
+        .schedule-item{
+            margin-bottom: 10px;
+        }
+        #partners{
+
+        }
+        .partner-title{
+            margin-bottom: 25px;
+        }
+        #organizer{
+            padding-top: 24px;
+        }
+        .partner-item{
+            margin-bottom: 20px;
+        }
+        .partner-item img{
+            max-width: 100%;
+        }
+        #ldanumaya{
+            height: 30px;
+        }
+        #lgaspack{
+            height: 27px;
+        }
+        #lint3rsect{
+            height: 12px;
+        }
+        #ljadi{
+            height: 15px;
+        }
+        .lgmk{
+            height: 23px;
+        }
+        .linfipop{
+            height: 28px;
+        }
+        .lfantoystic{
+            height: 32px;
+        }
+        #lblackhand{
+            height: 21px;
+        }
+        #lbritish{
+            height: 25px;
+        }
+        #lcipsi{
+            height: 21px;
+        }
+        #lformat{
+            height: 14px;
+        }
+        #lklif{
+            height: 27px;
+        }
+        #loic{
+            height: 27px;
+        }
+        #lpineapple{
+            height: 57px;
+            -webkit-transform: translateY(-18px);
+            -moz-transform: translateY(-18px);
+            -ms-transform: translateY(-18px);
+            -o-transform: translateY(-18px);
+            transform: translateY(-18px);
+        }
+        #lpinterest{
+            height: 30px;
+        }
+        #lprime{
+            height: 30px;
+        }
+        #footer{
+            margin: 30px 0 50px;
+            text-align: center;
+        }
+        .socmed-container{
+            margin-bottom: 15px;
+        }
+        .socmed-item{
+            display: inline-block;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+        .socmed-item img{
+            height: 30px;
+        }
+        @media (min-width: 992px) and (max-width: 1199px) {
+            .artist-img{
+                display: none;
+            }
+            .partner-title{
+                margin-bottom: 15px;
+            }
+            #ldanumaya{
+                height: 23px;
+            }
+            #lgaspack{
+                height: 27px;
+            }
+            #lint3rsect{
+                height: 12px;
+            }
+            #ljadi{
+                height: 13px;
+            }
+            #media-partner .partner-item{
+                display: inline-block;
+                margin-right: 15px;
+            }
+            .lgmk{
+                height: 18px;
+            }
+            .linfipop{
+                height: 24px;
+            }
+            .lfantoystic{
+                height: 27px;
+            }
+            #lblackhand{
+                height: 18px;
+            }
+            #lbritish{
+                height: 20px;
+            }
+            #lcipsi{
+                height: 18px;
+            }
+            #lformat{
+                height: 12px;
+            }
+            #lklif{
+                height: 24px;
+            }
+            #loic{
+                height: 25px;
+            }
+            #lpineapple{
+                height: 50px;
+                -webkit-transform: translateY(-14px);
+                -moz-transform: translateY(-14px);
+                -ms-transform: translateY(-14px);
+                -o-transform: translateY(-14px);
+                transform: translateY(-14px);
+            }
+            #lpinterest{
+                height: 28px;
+            }
+            #lprime{
+                height: 26px;
+            }
+        }
+        /* Tablet */
+        @media (min-width: 768px) and (max-width: 991px) {
+            .parallax-background{
+                background-position: -85% center, 175% center;
+            }
+            .one-section{
+                min-height: auto;
+            }
+            .home-info img{
+                max-height: 35px;
+            }
+            .info-item{
+                font-size: 12px;
+            }
+            .ticket-name{
+                font-size: 32px;
+            }
+            .ticket-description{
+                font-size: 20px;
+                line-height: 21px;
+            }
+            .schedule-items{
+                min-height: 175px;
+            }
+            .artist-img{
+                display: none;
+            }
+            .partner-title{
+                margin-bottom: 15px;
+            }
+            #media-partner .partner-item{
+                display: inline-block;
+                margin-right: 15px;
+            }
+            .partner-item{
+                margin-bottom: 15px;
+            }
+            #ldanumaya{
+                height: 18px;
+            }
+            #lgaspack{
+                height: 18px;
+            }
+            #lint3rsect{
+                height: 7px;
+            }
+            #ljadi{
+                height: 10px;
+            }
+            #lblackhand{
+                height: 13px;
+            }
+            #lbritish{
+                height: 15px;
+            }
+            #lcipsi{
+                height: 13px;
+            }
+            #lformat{
+                height: 9px;
+            }
+            #lklif{
+                height: 20px;
+            }
+            #loic{
+                height: 20px;
+            }
+            #lpineapple{
+                height: 50px;
+                -webkit-transform: translateY(-5px);
+                -moz-transform: translateY(-5px);
+                -ms-transform: translateY(-5px);
+                -o-transform: translateY(-5px);
+                transform: translateY(-5px);
+            }
+            #lpinterest{
+                height: 22px;
+            }
+            #lprime{
+                height: 20px;
+            }
+            .lgmk{
+                height: 13px;
+            }
+            .linfipop{
+                height: 18px;
+            }
+            .lfantoystic{
+                height: 20px;
+            }
+        }
+        /* Mobile */
+        @media (max-width: 767px) {
+            .nav-item{
+                margin: 0 15px;
+            }
+            .parallax-background{
+                height: 175%;
+                background-position: -50% center, 125% center;
+            }
+            .one-section{
+                margin-top: 30px;
+                margin-bottom: 30px;
+            }
+            #home{
+                padding: 65px 15px 0;
+            }
+            .main-img{
+                margin: 30px 0;
+            }
+            .home-info img{
+                max-height: 33px;
+            }
+            .info-item{
+                margin-bottom: 15px;
+                font-size: 13px;
+            }
+            #lashta{
+                text-align: left;
+            }
+            .artist-title, .event-title, .ticket-title{
+                font-size: 28px;
+            }
+            #regular{
+                margin: 0 0 50px;
+            }
+            .ticket-container{
+                margin-bottom: 50px;
+            }
+            .marquee-container{
+                width: 6214px;
+                animation: runningTextMobile 20s linear infinite;
+            }
+            .ticket-title{
+                margin-bottom: 80px;
+            }
+            .ticket-name{
+                font-size: 28px;
+            }
+            .ticket-description{
+                font-size: 18px;
+                line-height: 19px;
+            }
+            #artist{
+                padding: 0 30px;
+            }
+            .artist-title{
+                margin: 35px 0 10px 0;
+            }
+            .artist-names{
+                font-size: 26px;
+                line-height: 30px;
+            }
+            .artist-names a{
+                display: block;
+            }
+            .artist-img{
+                display: none;
+            }
+            .official-artist-names{
+                font-size: 15px;
+            }
+            #schedule{
+                padding: 0 30px;
+                margin-top: 50px;
+            }
+            .workshop{
+                margin-bottom: 40px;
+            }
+            #partners{
+                padding: 0 15px;
+            }
+            .partner-title{
+                margin: 20px 0 15px;
+                font-size: 15px;
+                line-height: 16px;
+            }
+            #organizer{
+                padding: 0;
+            }
+            .partner-item{
+                display: inline-block;
+                margin-right: 15px;
+                margin-bottom: 15px;
+            }
+            #ldanumaya{
+                height: 18px;
+            }
+            #lgaspack{
+                height: 18px;
+            }
+            #lint3rsect{
+                height: 7px;
+            }
+            #ljadi{
+                height: 10px;
+            }
+            #lblackhand{
+                height: 13px;
+            }
+            #lbritish{
+                height: 15px;
+            }
+            #lcipsi{
+                height: 13px;
+            }
+            #lformat{
+                height: 9px;
+            }
+            #lklif{
+                height: 20px;
+            }
+            #loic{
+                height: 20px;
+            }
+            #lpineapple{
+                height: 50px;
+                -webkit-transform: translateY(-5px);
+                -moz-transform: translateY(-5px);
+                -ms-transform: translateY(-5px);
+                -o-transform: translateY(-5px);
+                transform: translateY(-5px);
+            }
+            #lpinterest{
+                height: 22px;
+            }
+            #lprime{
+                height: 20px;
+            }
+            .lgmk{
+                height: 13px;
+            }
+            .linfipop{
+                height: 18px;
+            }
+            .lfantoystic{
+                height: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="parallax-container">
+        <div class="parallax-background"></div>
+    </div>
+    <!-- NAVIGATION -->
+    <nav class="navbar-fixed-top not-scrolled">
+        <div class="container">
+            <ul class="nav-container">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#home">Home</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#tickets">Ticket</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#artist">Artist</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#schedule">Schedule</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HOME -->
+    <div id="home">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 main-img">
+                    <img src="res/img/logo.png" />
+                </div>
+            </div>
+            <div class="home-info row justify-content-evenly align-items-center">
+                <div class="col-7 col-md-3 col-xxl-2 info-item">
+                    JAKARTA ILLUSTRATION<br/>& CREATIVE ARTS FAIR
+                </div>
+                <div class="col-5 col-md-3 col-xxl-2 info-item">
+                    9-19<br/>NOVEMBER 2023
+                </div>
+                <div class="col-7 col-md-3 col-xxl-2 info-item">
+                    SPAC8, UG<br/>ASHTA District 8
+                </div>
+                <div id="lashta" class="col-5 col-md-3 col-xxl-2 info-item">
+                    <img src="res/img/sponsor/ashta.png" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TICKETS -->
+    <div id="tickets" class="container one-section">
+        <div class="row justify-content-evenly">
+            <div class="col-12 ticket-title text-center">
+                <div class="ticket-marquee">
+                    <div class="marquee-container">
+                        <div class="marquee-item">
+                            •&nbsp;&nbsp;&nbsp;&nbsp;GET YOUR TICKETS NOW!&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;LIMITED AVAILABILITY&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;GET YOUR TICKETS NOW!&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;LIMITED AVAILABILITY&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;GET YOUR TICKETS NOW!&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;LIMITED AVAILABILITY&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;GET YOUR TICKETS NOW!&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;LIMITED AVAILABILITY&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div>
+                        <div class="marquee-item">
+                            •&nbsp;&nbsp;&nbsp;&nbsp;GET YOUR TICKETS NOW!&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;LIMITED AVAILABILITY&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;GET YOUR TICKETS NOW!&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;LIMITED AVAILABILITY&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;GET YOUR TICKETS NOW!&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;LIMITED AVAILABILITY&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;GET YOUR TICKETS NOW!&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;LIMITED AVAILABILITY&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-xl-5 col-xxl-4">
+                <a href="https://www.loket.com/event/jakarta-illustration-creative-arts-fair-2023_VDDb4" target="_blank" id="regular" class="ticket-container">
+                    <div class="ticket-name">REGULAR PASS</div>
+                    <div class="ticket-description">for one day access</div>
+                </a>
+            </div>
+            <div class="col-12 col-md-6 col-xl-5 col-xxl-4">
+                <a href="https://www.loket.com/event/jakarta-illustration-creative-arts-fair-2023_VDDb4" target="_blank" class="ticket-container">
+                    <div class="ticket-name">FULL EVENT PASS</div>
+                    <div class="ticket-description">for full 10-days unlimited entry<br/>+ 10% discount on all purchases</div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ARTISTS -->
+    <div id="artist" class="container one-section">
+        <div class="row">
+            <div class="col-12 artist-title mt-0">GUEST ARTISTS</div>
+            <div class="col-12 artist-names d-none d-md-block">
+                <a href="https://www.instagram.com/ardhiraputra/" target="_blank"><span class="artist-text">Ardhira Putra</span><img class="artist-img" src="res/img/artists/ardhira-putra.jpg" /></a>
+                —
+                <a href="https://www.instagram.com/antonioreinhard/" target="_blank"><span class="artist-text">Antonio Reinhard</span><img class="artist-img" src="res/img/artists/antonio-reinhard-wisesa.jpg" /></a>
+                —
+                <a href="https://www.instagram.com/ardneks/" target="_blank"><span class="artist-text">Ardneks</span><img class="artist-img" src="res/img/artists/ardneks.jpg" /></a>
+                —
+                <a href="https://www.instagram.com/eliciaedijanto/" target="_blank"><span class="artist-text">Elicia Edijanto</span><img class="artist-img" src="res/img/artists/elicia-edijanto.jpg" /></a>
+                —
+                <a href="https://www.instagram.com/ishahening/" target="_blank"><span class="artist-text">Isha Hening</span><img class="artist-img" src="res/img/artists/isha-hening.jpg" /></a>
+                —
+                <a href="https://www.instagram.com/vngnc/" target="_blank"><span class="artist-text">izzy</span><img class="artist-img" src="res/img/artists/izzy.jpg" /></a>
+                —
+                <a href="https://www.instagram.com/liunic/" target="_blank"><span class="artist-text">Liunic</span><img class="artist-img" src="res/img/artists/liunic.jpg" /></a>
+                —
+                <a href="https://www.instagram.com/rooovie/" target="_blank"><span class="artist-text">M. Fatchurofi</span><img class="artist-img" src="res/img/artists/m-fatchurofi.jpg" /></a>
+                —
+                <a href="https://www.instagram.com/pinot/" target="_blank"><span class="artist-text">Pinot</span><img class="artist-img" src="res/img/artists/pinot.jpg" /></a>
+                —
+                <a href="https://www.instagram.com/stereoflow_id/" target="_blank"><span class="artist-text">Stereoflow</span><img class="artist-img" src="res/img/artists/stereoflow.jpg" /></a>
+            </div>
+            <div class="col-12 artist-names d-block d-md-none">
+                <a href="https://www.instagram.com/ardhiraputra/" target="_blank"><span class="artist-text">Ardhira Putra</span></a>
+                <a href="https://www.instagram.com/antonioreinhard/" target="_blank"><span class="artist-text">Antonio Reinhard</span></a>
+                <a href="https://www.instagram.com/ardneks/" target="_blank"><span class="artist-text">Ardneks</span></a>
+                <a href="https://www.instagram.com/eliciaedijanto/" target="_blank"><span class="artist-text">Elicia Edijanto</span></a>
+                <a href="https://www.instagram.com/ishahening/" target="_blank"><span class="artist-text">Isha Hening</span></a>
+                <a href="https://www.instagram.com/vngnc/" target="_blank"><span class="artist-text">izzy</span></a>
+                <a href="https://www.instagram.com/liunic/" target="_blank"><span class="artist-text">Liunic</span></a>
+                <a href="https://www.instagram.com/rooovie/" target="_blank"><span class="artist-text">M. Fatchurofi</span></a>
+                <a href="https://www.instagram.com/pinot/" target="_blank"><span class="artist-text">Pinot</span></a>
+                <a href="https://www.instagram.com/stereoflow_id/" target="_blank"><span class="artist-text">Stereoflow</span></a>
+            </div>
+
+            <div class="col-12 artist-title">SPECIAL SHOWCASE</div>
+            <div class="col-12 artist-names d-none d-md-block">
+                <a href="#" target="_blank"><span class="artist-text">Kowawa by Abenk Alter</span></a>
+                —
+                <a href="#" target="_blank"><span class="artist-text">Kunto Aji</span></a>
+                —
+                <a href="#" target="_blank"><span class="artist-text">Machine56</span></a>
+                —
+                <a href="#" target="_blank"><span class="artist-text">Tabi by Marchella FP</span></a>
+                —
+                <a href="#" target="_blank"><span class="artist-text">Mochtar Sarman</span></a>
+            </div>
+            <div class="col-12 artist-names d-block d-md-none">
+                <a href="#" target="_blank"><span class="artist-text">Kowawa by Abenk Alter</span></a>
+                <a href="#" target="_blank"><span class="artist-text">Kunto Aji</span></a>
+                <a href="#" target="_blank"><span class="artist-text">Machine56</span></a>
+                <a href="#" target="_blank"><span class="artist-text">Tabi by Marchella FP</span></a>
+                <a href="#" target="_blank"><span class="artist-text">Mochtar Sarman</span></a>
+            </div>
+
+            <div class="col-12 artist-title">OFFICIAL ARTISTS</div>
+            <div class="col-6 col-md-3 official-artist-names">
+                <a href="https://instagram.com/agil8" target="_blank"><span class="artist-text">agil8</span></a><br/>
+                <a href="https://www.instagram.com/aryamularama/" target="_blank"><span class="artist-text">Arya Mularama</span></a><br/>
+                <a href="https://www.instagram.com/aufaag/" target="_blank"><span class="artist-text">aufaag</span></a><br/>
+                <a href="https://www.instagram.com/_06.t_" target="_blank"><span class="artist-text">DAN</span></a><br/>
+                <a href="https://www.instagram.com/durhminic/" target="_blank"><span class="artist-text">Durhminic</span></a><br/>
+                <a href="https://www.instagram.com/erikartoon/" target="_blank"><span class="artist-text">Erikartoon</span></a><br/>
+                <a href="http://www.instagram.com/glendlumbao/" target="_blank"><span class="artist-text">Glendford Lumbao</span></a><br/>
+                <a href="https://instagram.com/hushbeast" target="_blank"><span class="artist-text">Hushbeast</span></a><br/>
+                <a href="https://www.instagram.com/samajeyan/" target="_blank"><span class="artist-text">Jeanifer Youngky</span></a><br/>
+                <a href="https://www.instagram.com/jeremy_gdalia/" target="_blank"><span class="artist-text">Jeremy Gdalia</span></a><br/>
+                <a href="https://www.instagram.com/jeremy_jap95/" target="_blank"><span class="artist-text">Jeremy Jap</span></a>
+            </div>
+            <div class="col-6 col-md-3 official-artist-names">
+                <a href="https://www.instagram.com/jillgoeschill/" target="_blank"><span class="artist-text">Jill Tran</span></a><br/>
+                <a href="https://www.instagram.com/keikusuma/" target="_blank"><span class="artist-text">Kei Kusuma</span></a><br/>
+                <a href="https://www.instagram.com/cutssss/" target="_blank"><span class="artist-text">Kevin Varian</span></a><br/>
+                <a href="https://www.instagram.com/kongandri/" target="_blank"><span class="artist-text">Kong Andri</span></a><br/>
+                <a href="https://www.instagram.com/matasatu_matabolong/" target="_blank"><span class="artist-text">Matasatu & Matabolong</span></a><br/>
+                <a href="https://www.instagram.com/mikrosil/" target="_blank"><span class="artist-text">mikrosil</span></a><br/>
+                <a href="https://www.instagram.com/mirffu/" target="_blank"><span class="artist-text">Mirfak</span></a><br/>
+                <a href="https://www.instagram.com/monez_/" target="_blank"><span class="artist-text">Monez</span></a><br/>
+                <a href="https://www.instagram.com/synasaya" target="_blank"><span class="artist-text">Nasaya Mafaridik</span></a><br/>
+                <a href="https://www.instagram.com/nikojutsu" target="_blank"><span class="artist-text">Nikojutsu</span></a><br/>
+                <a href="http://instagram.com/nrlail" target="_blank"><span class="artist-text">Nurulaila Fitriyani</span></a>
+            </div>
+            <div class="col-6 col-md-3 official-artist-names">
+                <a href="https://www.instagram.com/oliviariferiani/" target="_blank"><span class="artist-text">OLI</span></a><br/>
+                <a href="https://www.instagram.com/owiliunic/" target="_blank"><span class="artist-text">Owi Liunic</span></a><br/>
+                <a href="https://www.instagram.com/_phantasien/" target="_blank"><span class="artist-text">Phantasien</span></a><br/>
+                <a href="https://www.instagram.com/powl_/" target="_blank"><span class="artist-text">Powl</span></a><br/>
+                <a href="https://www.instagram.com/rensiardinta/" target="_blank"><span class="artist-text">Rensi Ardinta</span></a><br/>
+                <a href="https://www.instagram.com/royes__/" target="_blank"><span class="artist-text">Royes</span></a><br/>
+                <a href="https://www.instagram.com/rubahitam_/" target="_blank"><span class="artist-text">rubahitam</span></a><br/>
+                <a href="https://instagram.com/yesgostudio" target="_blank"><span class="artist-text">Rukmunal Hakim</span></a><br/>
+                <a href="https://www.instagram.com/ssartje__/" target="_blank"><span class="artist-text">Sari Sartje</span></a><br/>
+                <a href="https://www.instagram.com/satriawgp/" target="_blank"><span class="artist-text">SATRIAWGP</span></a><br/>
+                <a href="https://www.instagram.com/satwikakresna/" target="_blank"><span class="artist-text">Satwika Kresna</span></a>
+            </div>
+            <div class="col-6 col-md-3 official-artist-names">
+                <a href="https://www.instagram.com/septadenata/" target="_blank"><span class="artist-text">SDNT</span></a><br/>
+                <a href="https://www.instagram.com/shanetortilla/" target="_blank"><span class="artist-text">Shane Tiara</span></a><br/>
+                <a href="https://www.instagram.com/shanlync_/" target="_blank"><span class="artist-text">Shanlyn C.</span></a><br/>
+                <a href="https://www.instagram.com/taufikrgb/" target="_blank"><span class="artist-text">taufikrgb</span></a><br/>
+                <a href="https://www.instagram.com/tks.lowskill" target="_blank"><span class="artist-text">TKS Lowskill</span></a><br/>
+                <a href="https://www.instagram.com/tommychandra/" target="_blank"><span class="artist-text">Tommy Chandra</span></a><br/>
+                <a href="https://www.instagram.com/villarica___/" target="_blank"><span class="artist-text">Villarica</span></a><br/>
+                <a href="https://www.instagram.com/azis_wicaksono/" target="_blank"><span class="artist-text">Wicaksono Azis</span></a><br/>
+                <a href="https://www.instagram.com/wulangsunu/" target="_blank"><span class="artist-text">Wulang Sunu</span></a><br/>
+                <a href="https://www.instagram.com/yogkus" target="_blank"><span class="artist-text">Yogkus</span></a><br/>
+                <a href="https://www.instagram.com/yudho.xyz/" target="_blank"><span class="artist-text">Yudho</span></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCHEDULE -->
+    <div id="schedule" class="container one-section">
+        <div class="row row-cols-2 row-cols-md-5">
+            <div class="col-12 col-md-12">
+                <div class="event-title">EVENT SCHEDULE</div>
+            </div>
+            <div class="col">
+                <div class="schedule-title">[ FRI ]<br/>10 NOV</div>
+                <div class="schedule-items">
+                    <div class="schedule-item">
+                        <b>CONFERENCE / TALKS</b><br/>
+                        16:00-17:00<br/>
+                        JICAF x KLIF x OIC Singapore
+                    </div>
+                    <div class="schedule-item">
+                        16:30-17:30<br/>
+                        Ardneks
+                    </div>
+                    <div class="schedule-item">
+                        18:00-19:00<br/>
+                        M. Fatchurofi
+                    </div>
+                </div>
+                <div class="workshop">
+                    <b>WORKSHOP / LIVE PERFORMANCE</b><br/>
+                    PRIME BLANK CANVAS X JICAF 2023 ARTISTS
+                </div>
+            </div>
+            <div class="col">
+                <div class="schedule-title">[ SAT ]<br/>11 NOV</div>
+                <div class="schedule-items">
+                    <div class="schedule-item">
+                        <b>CONFERENCE / TALKS</b><br/>
+                        15:00-16:00<br/>
+                        Antonio Reinhard Wisesa
+                    </div>
+                    <div class="schedule-item">
+                        16:30-17:30<br/>
+                        Liunic
+                    </div>
+                    <div class="schedule-item">
+                        18:30-19:30<br/>
+                        Rukmunal Hakim x Ardhira Putra x Royes
+                    </div>
+                </div>
+                <div class="workshop">
+                    <b>WORKSHOP / LIVE PERFORMANCE</b><br/>
+                    PRIME BLANK CANVAS X JICAF 2023 ARTISTS<br/><br/>
+                    CIPSI CRAFF
+                </div>
+            </div>
+            <div class="col">
+                <div class="schedule-title">[ SUN ]<br/>12 NOV</div>
+                <div class="schedule-items">
+                    <div class="schedule-item">
+                        <b>CONFERENCE / TALKS</b><br/>
+                        15:00-16:00<br/>
+                        British Council Artists
+                    </div>
+                    <div class="schedule-item">
+                        16:30-17:30<br/>
+                        Izzy x Isha Hening
+                    </div>
+                </div>
+                <div class="workshop">
+                    <b>WORKSHOP / LIVE PERFORMANCE</b><br/>
+                    PRIME BLANK CANVAS X JICAF 2023 ARTISTS
+                </div>
+            </div>
+            <div class="col">
+                <div class="schedule-title">[ MON ]<br/>13 NOV</div>
+                <div class="schedule-items">
+                    <div class="schedule-item">
+                        <b>CONFERENCE / TALKS</b><br/>
+                        TBC
+                    </div>
+                </div>
+                <div class="workshop">
+                    <b>WORKSHOP / LIVE PERFORMANCE</b><br/>
+                    TBC
+                </div>
+            </div>
+            <div class="col">
+                <div class="schedule-title">[ TUE ]<br/>14 NOV</div>
+                <div class="schedule-items">
+                    <div class="schedule-item">
+                        <b>CONFERENCE / TALKS</b><br/>
+                        TBC
+                    </div>
+                </div>
+                <div class="workshop">
+                    <b>WORKSHOP / LIVE PERFORMANCE</b><br/>
+                    TBC
+                </div>
+            </div>
+            <div class="col">
+                <div class="schedule-title">[ WED ]<br/>15 NOV</div>
+                <div class="schedule-items">
+                    <div class="schedule-item">
+                        <b>CONFERENCE / TALKS</b><br/>
+                        16:00-17:00<br/>
+                        Pinterest x Shane Tortilla x Arya Mularama
+                    </div>
+                </div>
+                <div class="workshop">
+                    <b>WORKSHOP / LIVE PERFORMANCE</b><br/>
+                    TBC
+                </div>
+            </div>
+            <div class="col">
+                <div class="schedule-title">[ THU ]<br/>16 NOV</div>
+                <div class="schedule-items">
+                    <div class="schedule-item">
+                        <b>CONFERENCE / TALKS</b><br/>
+                        15:00-16:00<br/>
+                        Kunto Aji
+                    </div>
+                    <div class="schedule-item">
+                        16:30-17:30<br/>
+                        JADI Print x Nikojutsu x Satwika K.
+                    </div>
+                </div>
+                <div class="workshop">
+                    <b>WORKSHOP / LIVE PERFORMANCE</b><br/>
+                    BLACK HAND GANG
+                </div>
+            </div>
+            <div class="col">
+                <div class="schedule-title">[ FRI ]<br/>17 NOV</div>
+                <div class="schedule-items">
+                    <div class="schedule-item">
+                        <b>CONFERENCE / TALKS</b><br/>
+                        15:00-16:00<br/>
+                        Elicia Edijanto
+                    </div>
+                    <div class="schedule-item">
+                        16:30-17:30<br/>
+                        Stereoflow
+                    </div>
+                    <div class="schedule-item">
+                        18:30-19:30<br/>
+                        Abenk Alter
+                    </div>
+                </div>
+                <div class="workshop">
+                    <b>WORKSHOP / LIVE PERFORMANCE</b><br/>
+                    BLACK HAND GANG<br/><br/>
+                    PRIME BLANK CANVAS X JICAF 2023 ARTISTS
+                </div>
+            </div>
+            <div class="col">
+                <div class="schedule-title">[ SAT ]<br/>18 NOV</div>
+                <div class="schedule-items">
+                    <div class="schedule-item">
+                        <b>CONFERENCE / TALKS</b><br/>
+                        15:00-16:00<br/>
+                        GMK x JICAF Artists
+                    </div>
+                    <div class="schedule-item">
+                        16:30-17:30<br/>
+                        Eka Kurniawan x Wulang Sunu
+                    </div>
+                    <div class="schedule-item">
+                        18:30-19:30<br/>
+                        Ardhira Putra
+                    </div>
+                </div>
+                <div class="workshop">
+                    <b>WORKSHOP / LIVE PERFORMANCE</b><br/>
+                    PRIME BLANK CANVAS x JICAF 2023 ARTISTS
+                </div>
+            </div>
+            <div class="col">
+                <div class="schedule-title">[ SUN ]<br/>19 NOV</div>
+                <div class="schedule-items">
+                    <div class="schedule-item">
+                        <b>CONFERENCE / TALKS</b><br/>
+                        15:00-16:00<br/>
+                        Antonio Reinhard Wisesa
+                    </div>
+                    <div class="schedule-item">
+                        16:30-17:30<br/>
+                        BLACK HAND GANG
+                    </div>
+                    <div class="schedule-item">
+                        18:30-19:30<br/>
+                        JICAF Committees
+                    </div>
+                </div>
+                <div class="workshop">
+                    <b>WORKSHOP / LIVE PERFORMANCE</b><br/>
+                    PRIME BLANK CANVAS x JICAF 2023 ARTISTS
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PARTNERS -->
+    <div id="partners">
+        <div class="container">
+            <div class="row justify-content-evenly">
+                <div class="col-12 col-md-3 col-xl-auto">
+                    <div id="organizer" class="partner-title">
+                        <b>ORGANIZER</b>
+                    </div>
+                    <div class="partner-item">
+                        <img id="ldanumaya" src="res/img/sponsor/danumaya.png" />
+                    </div>
+                    <div class="partner-item">
+                        <img id="lgaspack" src="res/img/sponsor/gaspack.png" />
+                    </div>
+                    <div class="partner-item">
+                        <img id="lint3rsect" src="res/img/sponsor/int3rsect.png" />
+                    </div>
+                </div>
+                <div class="col-12 col-md-auto col-xl-auto">
+                    <div class="partner-title">
+                        OFFICIAL<br/><b>PRINTING PARTNER</b>
+                    </div>
+                    <div class="partner-item">
+                        <img id="ljadi" src="res/img/sponsor/jadi-print.png" />
+                    </div>
+                    <div id="media-partner" class="d-none d-md-block d-xl-none">
+                        <div class="partner-title">
+                            OFFICIAL<br/><b>MEDIA PARTNER</b>
+                        </div>
+                        <div class="partner-item">
+                            <img class="lgmk" src="res/img/sponsor/gmk.png" />
+                        </div>
+                        <div class="partner-item">
+                            <img class="linfipop" src="res/img/sponsor/infipop.png" />
+                        </div>
+                        <div class="partner-item">
+                            <img class="lfantoystic" src="res/img/sponsor/fantoystic.png" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-5 col-xl-auto">
+                    <div class="partner-title">
+                        OFFICIAL<br/><b>PARTNER</b>
+                    </div>
+                    <div class="row d-none d-md-block">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-auto">
+                                    <div class="partner-item">
+                                        <img id="lblackhand" src="res/img/sponsor/black-hand-gang.png" />
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="partner-item">
+                                        <img id="lbritish" src="res/img/sponsor/british-council.png" />
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="partner-item">
+                                        <img id="lcipsi" src="res/img/sponsor/cipsi-craff.png" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-auto">
+                                    <div class="partner-item">
+                                        <img id="lformat" src="res/img/sponsor/format.png" />
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="partner-item">
+                                        <img id="lklif" src="res/img/sponsor/klif.png" />
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="partner-item">
+                                        <img id="loic" src="res/img/sponsor/oic.png" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-auto">
+                                    <div class="partner-item">
+                                        <img id="lpineapple" src="res/img/sponsor/pineapple.png" />
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="partner-item">
+                                        <img id="lpinterest" src="res/img/sponsor/pinterest.png" />
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="partner-item">
+                                        <img id="lprime" src="res/img/sponsor/prime-black-canvas.png" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mobile d-block d-md-none">
+                        <div class="partner-item">
+                            <img id="lblackhand" src="res/img/sponsor/black-hand-gang.png" />
+                        </div>
+                        <div class="partner-item">
+                            <img id="lbritish" src="res/img/sponsor/british-council.png" />
+                        </div>
+                        <div class="partner-item">
+                            <img id="lcipsi" src="res/img/sponsor/cipsi-craff.png" />
+                        </div>
+                        <div class="partner-item">
+                            <img id="lformat" src="res/img/sponsor/format.png" />
+                        </div>
+                        <div class="partner-item">
+                            <img id="lklif" src="res/img/sponsor/klif.png" />
+                        </div>
+                        <div class="partner-item">
+                            <img id="loic" src="res/img/sponsor/oic.png" />
+                        </div>
+                        <div class="partner-item">
+                            <img id="lpineapple" src="res/img/sponsor/pineapple.png" />
+                        </div>
+                        <div class="partner-item">
+                            <img id="lpinterest" src="res/img/sponsor/pinterest.png" />
+                        </div>
+                        <div class="partner-item">
+                            <img id="lprime" src="res/img/sponsor/prime-black-canvas.png" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3 col-xl-auto d-block d-md-none d-xl-block">
+                    <div class="partner-title">
+                        OFFICIAL<br/><b>MEDIA PARTNER</b>
+                    </div>
+                    <div class="partner-item">
+                        <img class="lgmk" src="res/img/sponsor/gmk.png" />
+                    </div>
+                    <div class="partner-item">
+                        <img class="linfipop" src="res/img/sponsor/infipop.png" />
+                    </div>
+                    <div class="partner-item">
+                        <img class="lfantoystic" src="res/img/sponsor/fantoystic.png" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div id="footer">
+        <div class="continer">
+            <div class="socmed-container">
+                <a class="socmed-item" href="https://www.instagram.com/jkt.icaf/" target="_blank">
+                    <img src="res/img/socmed-ig.png" />
+                </a>
+                <a class="socmed-item" href="https://id.pinterest.com/JICAF2023/" target="_blank">
+                    <img src="res/img/socmed-pinterest.png" />
+                </a>
+            </div>
+            <div class="copyright">
+                &copy; JICAF 2023. ALL RIGHTS RESERVED.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Select all links with #ID anchors
+            $('.nav-link').on('click', function(event) {
+                event.preventDefault();
+
+                // Get the target #ID from the href attribute
+                var target = $(this.hash);
+
+                // Animate scrolling to the target #ID
+                $('html, body').animate({
+                    scrollTop: target.offset().top - 60
+                }, 100); // Adjust the duration as needed
+            });
+
+            $(window).scroll(function() {
+                // Check if the page has been scrolled down
+                var scrollPosition = $(this).scrollTop();
+                $('.parallax-background').css('transform', 'translate(0, ' + -scrollPosition / 3.5 + 'px)');
+                if (scrollPosition > 0) {
+                    // The page is not at the top
+                    $('.navbar-fixed-top').removeClass("not-scrolled");
+                } else {
+                    // The page is at the top
+                    $('.navbar-fixed-top').addClass("not-scrolled");
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
